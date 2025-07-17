@@ -22,7 +22,7 @@ program Driver
 
   integer, parameter :: n = 1000
   integer :: i
-  double precision :: A(3,n), x(n), r(n)
+  double precision :: A(n,n), x(n), r(n)
   double precision :: norm2
 
   !======= Internals ============
