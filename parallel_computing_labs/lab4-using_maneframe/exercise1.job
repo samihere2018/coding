@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH -J ex1_samihere               #job_name
+#SBATCH -p dev                        #requested_partition_or_queue_to_run_job_on
+#SBATCH --mem=1G                      #memory in GB
+#SBATCH -o ex1_out-%j.txt             #output_file
+#SBATCH -e ex1_err-%j.txt             #error_file
+#SBATCH -t 20
+#SBATCH --mail-user samihere@smu.edu  #send_an_email_on_status_of_the_job
+
+module load gcc/11.2.0
+module spider python/3.10.8-dkpz5k5
+srun python myjob.py 10

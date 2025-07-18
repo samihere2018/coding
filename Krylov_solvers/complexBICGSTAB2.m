@@ -1,12 +1,13 @@
 % Author: Sylvia Amihere, October 2024
 function [x_sol] = complexBICGSTAB2(x0,s1, s2, A_up, A_low, A_diag, max_iter, delta)
+%x0 = initial guess, usually zero
 
 % Function to generate matrix and RHS vector b
 [A, b] = matrix_A(s1,s2,A_up,A_low,A_diag);
 
 % Allocate vectors
 n = length(x0);
-x_sol = zeros(n, 1);
+x_sol = zeros(n, 1); 
 
 
 %Initialize
