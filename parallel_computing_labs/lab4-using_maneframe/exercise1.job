@@ -4,7 +4,7 @@
 #SBATCH --mem=1G                      #memory in GB
 #SBATCH -o ex1_out-%j.txt             #output_file
 #SBATCH -e ex1_err-%j.txt             #error_file
-#SBATCH -t 20
+#SBATCH -t 2
 #SBATCH --mail-user samihere@smu.edu  #send_an_email_on_status_of_the_job
 
 module load gcc/11.2.0
