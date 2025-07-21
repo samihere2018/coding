@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH -A reynolds_scidac_fes_0001
+#SBATCH -J ex2_samihere               
+#SBATCH -p dev                        
+#SBATCH --mem=2G                      
+#SBATCH -o ex2_out-%j.txt             
+#SBATCH -e ex2_err-%j.txt             
+#SBATCH -t 10
+#SBATCH --mail-user samihere@smu.edu 
+#SBATCH --mail-type BEGIN,END,FAIL
+
+srun python myjob.py 10
+srun python myjob.py 100
+srun python myjob.py 1000
+srun python myjob.py 10000
+srun python myjob.py 100000
+srun python myjob.py 1000000
+srun python myjob.py 10000000
+
