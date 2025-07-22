@@ -1,0 +1,3 @@
+ vector length = 10
+   dot product = 1.6500000000000001e-06
+      run time = 0.00e+00
