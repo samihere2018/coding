@@ -1,3 +1,5 @@
+! A simple program that computes the dot product of two vectors.
+! Source: Prof Daniel Reynolds' Lecture 2 Parallel Computing Notes on Fortran 
 program Driver
 
 !Declarations
