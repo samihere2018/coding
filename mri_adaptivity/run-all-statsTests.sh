@@ -14,16 +14,10 @@ python3 runStats_fixedCtrl_tests.py
 echo -e "Running statistical analysis for Brusselator and KPR, for all controllers with a fixed MRI method \n"
 python3 runStats_fixedMethod_tests.py
 
-# echo -e "Running statistical analysis for all MRI methods with a fixed controller, independent of test problem\n"
-# python3 runStats_fixedCtrl_Indep_tests.py
-
-echo -e "Running statistical analysis for all controllers with a fixed MRI method, independent of test problem\n"
-python3 runStats_fixedMethod_Indep_tests.py
-
 echo -e "Running statistical analysis for Brusselator and KPR, for all controllers \n"
 python3 runStats_allCtrls.py
 
-echo -e "Running statistical analysis for Brusselator and KPR, for all HTol and Decoupled controllers \n"
+echo -e "Running statistical analysis for Brusselator and KPR, for all HTol, Decoupled and Hh controllers \n"
 python3 runStats_hTol_dec_ctrl.py
 
 echo -e "Run tests completed!\n"
