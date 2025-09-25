@@ -1,0 +1,12 @@
+&list1
+    alf    = 1.d-1
+    uxadv  = -1.d-2    
+    uyadv  = 0.d0
+    vxadv  = -1.d-2 
+    vyadv  = 0.d0  
+    wxadv  = -1.d-2 
+    wyadv  = 0.d0
+    brussa = 6.d-1
+    brussb = 2.d0
+    amult  = 1.d0
+/
