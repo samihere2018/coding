@@ -7,13 +7,15 @@
 !---This program uses the CRITICAL directive to ensure that only one thread at a time can execute a particular section of code. 
 !---This is useful when multiple threads need to update a shared variable or resource, and we want to prevent race conditions.
 !---No two threads can execute the critical section at the same time.
+!---Here each thread increments a shared counter variable, and the critical section ensures that the increment operation is performed atomically.
+!---Hence, if the the counter is supposed to be increased n times, the final output will be n times the number  of threads since each thread will increment the counter n times.
 
 program critical_directive
 use omp_lib
 implicit none
 
 integer :: i, n, counter
-parameter (n=100)
+parameter (n=10)
 
 counter = 0
 !$omp parallel default (none) shared(counter) private(i)
