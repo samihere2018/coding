@@ -6,7 +6,7 @@
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
 !---This program computes e^x using the Maclaurin series expansion of a number.
 !---The ORDERED directive specifies thta itreations of the enclosed loop will be excuted in the same order as if they were
-!---executed serially. Threads will need to wait before executing thier chunk of iterations if previous iterations 
+!---executed serially. Threads will need to wait before executing their chunk of iterations if previous iterations 
 !---have not completed yet.
 !---The ORDERED directive is used within a do / for loop with an ORDERED clause.
 
