@@ -5,8 +5,8 @@
 !---static scheduling divides the iterations into equal sized chunks and assigns them to threads. Each thread does exactly the same number of iterations. 
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
 !---This program uses the SINGLE directive together with the COPYPRIVATE clause.
-!---The COPYPRIVATE clause broadacasts the value of its provate variables directly to the private variables to all other threads in the team.
-!---The COPYPRIVATE clause is associated witht eh SINGLE directive.
+!---The COPYPRIVATE clause broadacasts the value of its private variables directly to the private variables to all other threads in the team.
+!---The COPYPRIVATE clause is associated with the SINGLE directive.
 
 program single_copyprivate
 use omp_lib

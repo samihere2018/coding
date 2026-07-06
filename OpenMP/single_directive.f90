@@ -5,7 +5,7 @@
 !---static scheduling divides the iterations into equal sized chunks and assigns them to threads. Each thread does exactly the same number of iterations. 
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
 !---This program uses the SINGLE directive which specifies that the enclosed code is to be executed by only one thread in the team.
-!---Threads in the team that do not execute the SINGLE directive, wait at the end fo the enclosed code bloack, unless a NOWAIT clause is specified.
+!---Threads in the team that do not execute the SINGLE directive, wait at the end fo the enclosed code block, unless a NOWAIT clause is specified.
 !---This programs computes a vector operation with scalar coefficients.
 
 program single_directive

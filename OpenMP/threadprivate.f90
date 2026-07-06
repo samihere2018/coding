@@ -6,7 +6,7 @@
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
 !---This program uses the THREADPRIVATE directive and the copyin clause.
 !---The THREADPRIVATE directive allows each thread to have its own copy fo the global data.
-!---Hence, when a thread updates ots global data, the other threads have the original global data before their own individual updates.
+!---Hence, when a thread updates its global data, the other threads have the original global data before their own individual updates.
 !---The COPYIN clause provides a means for assigning the same value to THREADPRIVATE variables for all threads in a team.
 
 program threadprivate

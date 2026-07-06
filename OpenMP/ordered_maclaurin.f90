@@ -4,10 +4,11 @@
 !---dynamic scheduling allows threads to pick up the next available chunk of iterations when they finish their current chunk
 !---static scheduling divides the iterations into equal sized chunks and assigns them to threads. Each thread does exactly the same number of iterations. 
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
-!---This program computes e^x using the Maclaurin series expansion of a number.
-!---The ORDERED directive specifies thta itreations of the enclosed loop will be excuted in the same order as if they were
-!---executed serially. Threads will need to wait before executing their chunk of iterations if previous iterations 
-!---have not completed yet.
+!---This program computes the factorial of a number using the ORDERED directive.
+!---The ORDERED directive specifies that iterations of the enclosed loop will be excuted in the same order as if they were
+!---executed serially. Threads will need to wait before executing thier chunk of iterations if previous iterations have not completed yet.
+!---The ordered directive forces a specific section of code inside a parallel loop to execute one thread at a time in the exact,
+!---sequential order of a standard single-threaded loop.
 !---The ORDERED directive is used within a do / for loop with an ORDERED clause.
 
 program ordered_maclaurin_epx
