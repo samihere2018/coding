@@ -5,7 +5,7 @@
 !---static scheduling divides the iterations into equal sized chunks and assigns them to threads. Each thread does exactly the same number of iterations. 
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
 !---This computes the linear combination of vectors using OpenMP directives.
-!---You cna modified the code modify the code to use as many vectors or scalrs as you want.
+!---You can modified the code modify the code to use as many vectors or scalrs as you want.
 !---The vectors in this case are the rows of the matrix *** matrixA ***.
 !---The scalars are the entries of the row vector *** vectorB ***
 !---The number of columns in matrixA must be equal to the number of entries in vectorB.
@@ -49,7 +49,7 @@ end do
 !$omp end parallel do
 
 
-!$omp parallel default(none) shared(matrixA, vectorB, result, nrowsA, ncolsA, nrowsB) private(i, j, tid,start_time, end_time, thread_duration) 
+!$omp parallel default(none) shared(matrixA, vectorB, result, nrowsA, ncolsA, nrowsB) private(i, j, tid, start_time, end_time, thread_duration) 
 tid = omp_get_thread_num()
 start_time = omp_get_wtime()
 !$omp do schedule(static)
