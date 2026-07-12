@@ -4,9 +4,9 @@
 !---dynamic scheduling allows threads to pick up the next available chunk of iterations when they finish their current chunk
 !---static scheduling divides the iterations into equal sized chunks and assigns them to threads. Each thread does exactly the same number of iterations. 
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
-!---This program computes the Taylor series for ln(x) aroud point a.
+!---This program computes the Taylor series for ln(x) around point a.
 !---This program uses the FIRSTPRIVATE clause.
-!---The FIRSTPRIVATE clasue creates a local copy of each thread and copies the initial value into it.
+!---The FIRSTPRIVATE clause creates a local copy of each thread and copies the initial value into it.
 
 program firstprivate
 use omp_lib
