@@ -6,6 +6,7 @@
 ! LAST REVISED: 
 !*****************************************************************************************
 ! The commented code below has a bug and it's been fixed by the uncommented code below it.
+! SOLUTION: The fix was to add a reduction clause to the parallel region and make i and tid private
 !
 !       PROGRAM BUG2
      

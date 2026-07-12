@@ -5,16 +5,9 @@
 ! AUTHOR: Blaise Barney  01/09/04
 ! LAST REVISED: 06/28/05
 !******************************************************************************
-
-! C******************************************************************************
-! C FILE: omp_bug3.f
-! C DESCRIPTION:
-! C   Run time bug
-! C AUTHOR: Blaise Barney  01/09/04
-! C LAST REVISED: 06/28/05
-! C******************************************************************************
+!
 ! The commented code below has a bug and it's been fixed by the uncommented code below it.
-! The fix was to remove the "omp barrier" directive in the subroutine PRINT_RESULTS. 
+! SOLUTION: The fix was to remove the "omp barrier" directive in the subroutine PRINT_RESULTS.
 ! The barrier was causing a deadlock because all threads were waiting for each other to reach the barrier, 
 ! but some threads had already exited the parallel region and could not reach the barrier.
 !
