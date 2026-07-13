@@ -22,7 +22,7 @@ do i = 1, n
 end do
 
 result_dotprod = 0.d0
-!$omp parallel default(none) shared(A, B, result_dotprod) private(i, tid)
+!$omp parallel default(none) shared(A, B, result_dotprod) 
 call dotProd(A, B, n, result_dotprod)
 !$omp end parallel
 
