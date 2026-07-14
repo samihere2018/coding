@@ -8,6 +8,7 @@
 !---The program demonstrates the use of OpenMP directives to parallelize the computation across multiple threads.
 
 program vector_addition_SAXPY
+!imports intrinsic module iso_fortran_env to use the real32 kind for single precision floating point numbers
 use, intrinsic :: iso_fortran_env, only: real32
 use omp_lib
 implicit none
