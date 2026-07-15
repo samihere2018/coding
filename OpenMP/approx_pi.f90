@@ -4,7 +4,7 @@
 !---dynamic scheduling allows threads to pick up the next available chunk of iterations when they finish their current chunk
 !---static scheduling divides the iterations into equal sized chunks and assigns them to threads. Each thread does exactly the same number of iterations. 
 !---Compilation: gfortran -fopenmp -o dummyname workshare2.f90
-!---This program approximates the values of PI using n number of rectangles (Riemann Sum).
+!---This program approximates the values of PI using n number of rectangles (Riemann Sum and midpoint rule).
 
 program approx_pi
 use omp_lib
