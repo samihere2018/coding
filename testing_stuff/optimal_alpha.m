@@ -5,6 +5,9 @@ for i = 2:n
     alpha_s_1_n(i, 1) = i;
     alpha_s_1_n(i, 2) = bisection(i);
 end
+plot(alpha_s_1_n(:,1),alpha_s_1_n(:,2),'r--', 'LineWidth',2)
+xlabel('stages', 'FontSize', 12);
+ylabel('optimal alpha', 'FontSize', 12);
 end
 
 
