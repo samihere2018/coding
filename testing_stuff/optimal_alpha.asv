@@ -1,5 +1,4 @@
-% function alpha_s_1_n = optimal_alpha(n)
-function optimal_alpha(n)
+function alpha_s_1_n = optimal_alpha(n)
 alpha_s_1_n = zeros(n,3);
 for i = 2:n
     %i goes from 2 because we want 2 stages or more
@@ -12,13 +11,13 @@ for i = 2:n
     %seems to give some alternating values for stages. See my rough hand
     %notes on this whole RKG2 ellipse in stability region ideas.
 end
-disp("Optimal alpha and p value for " + n + " stages: " + " alpha = " + alpha_s_1_n(n, 2) + " p = " + alpha_s_1_n(n, 3))
+disp("Optimal alpha and p value for " + n + " stages: " + " alpha = " + alpha_s_1_n(n, 2) + )
 RKG2_stabReg(n, alpha_s_1_n(n,2)); %plot the stability region with ellipse (suign optimal alpha and beta) of n-stages
-% hold on;
-% figure;
-% plot(alpha_s_1_n(:,1),alpha_s_1_n(:,2),'r--', 'LineWidth',2)
-% xlabel('stages', 'FontSize', 12);
-% ylabel('optimal alpha', 'FontSize', 12);
+hold on;
+figure;
+plot(alpha_s_1_n(:,1),alpha_s_1_n(:,2),'r--', 'LineWidth',2)
+xlabel('stages', 'FontSize', 12);
+ylabel('optimal alpha', 'FontSize', 12);
 end
 
 
