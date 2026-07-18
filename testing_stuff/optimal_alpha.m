@@ -12,7 +12,7 @@ for i = 2:n
     %seems to give some alternating values for stages. See my rough hand
     %notes on this whole RKG2 ellipse in stability region ideas.
 end
-disp("Optimal alpha and p value for " + n + " stages: " + " alpha = " + alpha_s_1_n(n, 2) + " p = " + alpha_s_1_n(n, 3))
+disp("For " + n + " stages: " + " alpha = " + alpha_s_1_n(n, 2) + ", p = " + alpha_s_1_n(n, 3))
 RKG2_stabReg(n, alpha_s_1_n(n,2)); %plot the stability region with ellipse (suign optimal alpha and beta) of n-stages
 % hold on;
 % figure;
