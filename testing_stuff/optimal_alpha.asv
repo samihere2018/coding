@@ -8,12 +8,13 @@ for i = 2:n
     alpha_s_1_n(i, 1) = int32(i);%stage number
     alpha_s_1_n(i, 2) = bisection(i); %corresponding optimal alpha 
     alpha_s_1_n(i, 3) = alpha_s_1_n(i, 2)^2/beta_s;%corresponding relationship between alpah and beta; alpha/beta & beta /alpha don't converge anywhere
-    %this relationship: (minor axis)^2/major axis is semi lactus rectum used in O'Sullivan's equation 14 but I dont understand. 
-    %However, it seems to give some alternating values for stages. See my rough handwritten notes on this whole RKG2 ellipse in stability region ideas.
+    %this relationship: (minor axis)^2/major axis is semi lactus rectum.
+    %used in O'Sullivan's equation 14 but I dont understand. However, it
+    %seems to give some alternating values for stages. See my rough hand
+    %notes on this whole RKG2 ellipse in stability region ideas.
 end
-RKG2_stabReg(n, alpha_s_1_n(n,2));
 disp("For " + n + " stages: " + " alpha = " + alpha_s_1_n(n, 2) + ", p = " + alpha_s_1_n(n, 3))
-% RKG2_stabReg(n, alpha_s_1_n(n,2)); %plot the stability region with ellipse (using optimal alpha and beta) of n-stages
+RKG2_stabReg(n, alpha_s_1_n(n,2)); %plot the stability region with ellipse (suign optimal alpha and beta) of n-stages
 % hold on;
 % figure;
 % plot(alpha_s_1_n(:,1),alpha_s_1_n(:,2),'r--', 'LineWidth',2)

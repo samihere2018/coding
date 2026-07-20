@@ -1,6 +1,45 @@
-%uncomment the next line and comment the one after it if you want the optimal alpha for each stage value
-% function alpha_s_1_n = optimal_alpha(n)
-function optimal_alpha(n)
+function s_final = NumOfStages(lambda, dt)
+%Description: computes the correct number of stages given the initial
+%             number of stages, desired step size and dominant eigenvalue (real or complex)
+%Input: s_initial = initial number of stages (no to be supplied by the user, the user
+%                   just supplies the desired step size and the dominant eigenvalue)
+%Output: s_final = correct number of stages
+s_initial = NumOfStages_intial(lambda, dt);
+% [p, optimal_alpha] = optimal_alpha(s_intial);
+s = 0;
+while(s~=s_initial)
+    s = s_initial;
+    [p, alpha] = optimal_alpha(s);
+    s = NumOfStages_intial(lambda, dt, p);
+    s
+end
+s_final = s;
+RKG2_stabReg(s_final, alpha);
+disp("Convergence reached. Number of stages = " + s_final)
+end
+
+function s_initial = NumOfStages_intial(lambda, dt, p)
+%Description: Computes the number of stages given a desired step size and the dominant eigenvalue (complex or real)
+%Input: lambda = complex-valued dominant eigenvalue (it coule be real)
+%        dt = desired step size
+%        p is optional but any value provided overrides the default
+%        p = (alpha^2)/beta; alpha = minor axis of ellipse, beta = major axis of ellipse
+%Output: s = number of stages
+if nargin < 3
+    p = 1.243; %use the default if not provided
+end
+
+x_val = real(lambda);
+y_val = imag(lambda);
+x_s = dt * x_val;
+y_s = dt * y_val;
+
+beta_val = (-4.0 * (x_s ^ 2)) / (4.0 * x_s + ((y_s ^ 2)/p));
+s_initial = ceil(0.5 * (-3.0 + sqrt(25.0 + 3.0 * beta_val)));
+end
+
+
+function [p, alpha] = optimal_alpha(n)
 alpha_s_1_n = zeros(n,3);
 for i = 2:n
     %i goes from 2 because we want 2 stages or more
@@ -11,8 +50,10 @@ for i = 2:n
     %this relationship: (minor axis)^2/major axis is semi lactus rectum used in O'Sullivan's equation 14 but I dont understand. 
     %However, it seems to give some alternating values for stages. See my rough handwritten notes on this whole RKG2 ellipse in stability region ideas.
 end
-RKG2_stabReg(n, alpha_s_1_n(n,2));
-disp("For " + n + " stages: " + " alpha = " + alpha_s_1_n(n, 2) + ", p = " + alpha_s_1_n(n, 3))
+% RKG2_stabReg(n, alpha_s_1_n(n,2));
+p = alpha_s_1_n(n, 3);
+alpha = alpha_s_1_n(n, 2);
+% disp("For " + n + " stages: " + " alpha = " + alpha_s_1_n(n, 2) + ", p = " + alpha_s_1_n(n, 3))
 % RKG2_stabReg(n, alpha_s_1_n(n,2)); %plot the stability region with ellipse (using optimal alpha and beta) of n-stages
 % hold on;
 % figure;
@@ -185,4 +226,10 @@ ylabel('imag(z)', 'FontSize', 12);
 hold off;
 
 end
+
+
+
+
+
+
 
