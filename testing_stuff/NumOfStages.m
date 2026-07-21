@@ -5,6 +5,7 @@ function s_final = NumOfStages(lambda, dt)
 %                   just supplies the desired step size and the dominant eigenvalue)
 %Output: s_final = correct number of stages
 s = NumOfStages_intial(lambda, dt);
+s = s + mod(s,2); %we want s even
 disp("Initial stages: " + s);
 s_initial = 0;
 counter = 0;
@@ -13,10 +14,15 @@ while(s~=s_initial)
     s_initial = s;
     [p, alpha] = optimal_alpha(s_initial);
     s = NumOfStages_intial(lambda, dt, p);
+    s = s + mod(s,2); %we want s even
 end
 s_final = s;
-RKG2_stabReg(s_final, alpha);
 disp("Convergence reached after " + counter + " iterations with <strong>" + s_final + "</strong> stages. " )
+RKG2_stabReg(s_final, alpha);
+hold on;
+plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12)
+hold off;
+
 end
 
 function s_initial = NumOfStages_intial(lambda, dt, p)

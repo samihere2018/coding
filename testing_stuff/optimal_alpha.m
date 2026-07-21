@@ -1,6 +1,6 @@
 %uncomment the next line and comment the one after it if you want the optimal alpha for each stage value
-% function alpha_s_1_n = optimal_alpha(n)
-function optimal_alpha(n)
+function alpha_s_1_n = optimal_alpha(n)
+% function optimal_alpha(n)
 alpha_s_1_n = zeros(n,3);
 for i = 2:n
     %i goes from 2 because we want 2 stages or more
