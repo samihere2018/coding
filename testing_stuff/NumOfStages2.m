@@ -1,23 +1,22 @@
 function NumOfStages2(lambda, dt)
-%Description: computes the correct number of stages given the initial
-%             number of stages, desired step size and dominant eigenvalue (real or complex)
-%Input: s_initial = initial number of stages (no to be supplied by the user, the user
-%                   just supplies the desired step size and the dominant eigenvalue)
-%Output: s_final = correct number of stages
-
+% =========================================================================
+%Description: computes the correct number of stages given a desired 
+%             step size and dominant eigenvalue (real or complex)
+% =========================================================================
 x_val = real(lambda);
 if (x_val>0)
     error("Real part of lambda must be negative!")
 end
 
 y_val = imag(lambda);
-%beta = -4x^2 / ( 4x + y^2/(alpha^2/beta) )
-%given that beta must be positive, the denominator cannot be >=0
-if (abs(x_val) <= abs(y_val)^2.0 / (4.0 * 1.2434134152701))
-    error("Beta must be positive, hence it denominator must be negative!")
-end
 x_s = dt * x_val;
 y_s = dt * y_val;
+
+%beta = -4x^2 / ( 4x + y^2/(alpha^2/beta) )
+%given that beta must be positive, the denominator cannot be >=0
+if (abs(x_s) <= abs(y_s)^2.0 / (4.0 * 1.2434134152701))
+    error("Beta must be positive, hence it denominator must be negative!")
+end
 
 s = 2;
 [alphaS, betaS] = bisection(s);
@@ -34,11 +33,10 @@ RKG2_stabReg(s_final, alphaS);
 hold on;
 plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12)
 hold off;
-
 end
 
 
-
+% -------------------------------------------------------------------------
 function [alpha_s, beta_s] = bisection(s)
 %==========================================================================
 % This program takes the number of stages to help determine the optimal
@@ -66,6 +64,7 @@ alpha_s = low_alpha;
 end
 
 
+% -------------------------------------------------------------------------
 function fit = ellipse_alpha(s, alpha_s)
 %==========================================================================
 % This program takes the number of stages and a value of alpha to determine
@@ -127,6 +126,7 @@ end
 end
 
 
+% -------------------------------------------------------------------------
 function RKG2_stabReg(s, alpha_s)
 % This function plots the stability region for the RKG2 scheme in 
 % "Super-time-stepping schemes for parabolic equations with boundary " + ...
