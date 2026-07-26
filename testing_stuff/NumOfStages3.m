@@ -17,7 +17,7 @@ else
     %beta = -4x^2 / ( 4x + y^2/(alpha^2/beta) )
     %given that beta must be positive, the denominator cannot be >=0
     if (abs(x_s) <= abs(y_s)^2.0 / (4.0 * 1.2434134152701))
-        error("Beta must be positive, hence it denominator must be negative!")
+        error("Beta must be positive (its denominator must be negative), hence reduce dt!")
     end
     s = 2;
     betaS = (s+4)*(s-1)/3;
@@ -364,6 +364,13 @@ x_t = -beta_s/2 * cos(t) - beta_s/2;
 y_t = alpha_s * sin(t) + 0;
 plot(x_t, y_t, 'r--', "LineWidth", 1)
 
+%add the region where the scheme will not work (where the denominator of
+%beta is not negative)
+p_max = 1.243; %the maximum value of p = alpha^2/beta, large stages converge to thsi value
+yy = linspace(ymin, ymax, 400);
+xx = -(yy.^2) / (4.0 * p_max);
+fill([xx, xmax*ones(1, 400)], [yy, fliplr(yy)], [0.6 0.6 0.6], 'FaceAlpha', 0.3, 'EdgeColor', 'none');
+plot(xx, yy, 'k:', 'LineWidth', 1.2);
 
 title(sprintf('RKG2 stability region with %d stages', s), 'FontSize', 12);
 xlabel('real(z)', 'FontSize', 12);

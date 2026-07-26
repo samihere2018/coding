@@ -8,7 +8,7 @@ function RKG2_stabReg2(s)
 % stages squared.
 % Author: Sylvia Amihere
 
-if (s<=2)
+if (s<=1)
     error('Number of stages must be a positive integer greater than or equal to 2.');
 end
 
@@ -137,6 +137,14 @@ t = linspace(0, 2*pi, 5000);
 x_t = -beta_s/2 * cos(t) - beta_s/2;
 y_t = alpha_s * sin(t) + 0;
 plot(x_t, y_t, 'r--', "LineWidth", 1)
+
+
+%add the region where the scheme will not work
+p_max = 1.243; %the maximum value of p = alpha^2/beta
+yy = linspace(ymin, ymax, 400);
+xx = -(yy.^2) / (4.0 * p_max);
+fill([xx, xmax*ones(1, 400)], [yy, fliplr(yy)], [0.6 0.6 0.6], 'FaceAlpha', 0.3, 'EdgeColor', 'none');
+plot(xx, yy, 'k:', 'LineWidth', 1.2);
 
 
 title(sprintf('RKG2 stability region with %d stages', s), 'FontSize', 12);
