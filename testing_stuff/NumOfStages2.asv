@@ -28,15 +28,14 @@ while (ellispe_cond > 1)
     ellispe_cond = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s / alphaS)^2.0;
 end
 s_final = s;
-disp("Total number of stages: " + s_final);
+disp("Total number of stages: " + s);
 RKG2_stabReg(s_final, alphaS);
 hold on;
-plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5)
+plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12)
 hold on
-dim = [0.145, 0.825, 0.3, 0.1];
-str = {[ 'dt = ', num2str(dt) ]; [ 'lambda = ', num2str(lambda) ]; [ 'bisection iterations = ', num2str(iter) ];...
-       ['number of stages = ', num2str(s_final) ]};
-annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 10);
+dim = [0.15, 0.78, 0.3, 0.1];
+str = {[ 'dt = ', num2str(dt) ]; [ 'lambda = ', num2str(lambda) ], [ ' bisection iterations = ', num2str(iter) ]};
+annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 16);
 hold off;
 end
 
