@@ -297,7 +297,7 @@ plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5)
 hold on
 dim = [0.145, 0.825, 0.3, 0.1];
 if (dt~=original_dt)
-    dt_label = [ 'dt (modified) = ', num2str(dt) ];
+    dt_label = [ 'dt (original) = ', num2str(original_dt), ',  dt (modified) = ', num2str(dt) ];
 else
     dt_label = [ 'dt (original) = ', num2str(dt) ];
 end
