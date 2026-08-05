@@ -1,4 +1,5 @@
-function [step_size, s_final] = NumOfStages4(lambda, dt)
+function NumOfStages4(lambda, dt)
+% function [step_size, s_final] = NumOfStages4(lambda, dt)
 % =========================================================================
 % Description: computes the correct number of stages given a desired 
 %             step size and dominant eigenvalue (real or complex)
@@ -289,7 +290,7 @@ else
 end
 step_size = dt;
 s_final = s;
-disp("Total number of stages: " + s_final);
+disp("stages = " + s_final + ", final step size = " + dt);
 RKG2_stabReg(s_final, alphaS);
 hold on;
 plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5)
