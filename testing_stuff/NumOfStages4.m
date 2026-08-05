@@ -288,7 +288,7 @@ else
         ellispe_cond = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s/ alphaS) ^ 2.0;
     end
 end
-step_size = dt;
+% step_size = dt;
 s_final = s;
 disp("stages = " + s_final + ", final step size = " + dt);
 RKG2_stabReg(s_final, alphaS);
