@@ -1,4 +1,4 @@
-function NumOfStages3(lambda, dt)
+function [step_size, s_final] = NumOfStages4(lambda, dt)
 % =========================================================================
 % Description: computes the correct number of stages given a desired 
 %             step size and dominant eigenvalue (real or complex)
@@ -7,19 +7,24 @@ x_val = real(lambda);
 y_val = imag(lambda);
 x_s = dt * x_val;
 y_s = dt * y_val;
+original_dt = dt;
 
 if (x_val>=0)
-    s=2;
+    s=2;%Prof Reynolds: we have to consider a better option for when real(lambda)>=0)
     betaS = (s+4)*(s-1)/3;
     alphaS = sqrt(1.5 * betaS); %if s==2, p = 1.5
-    
 else
-    %beta = -4x^2 / ( 4x + y^2/(alpha^2/beta) )
-    %given that beta must be positive, the denominator cannot be >=0
-    if (abs(x_s) <= abs(y_s)^2.0 / (4.0 * 1.2434134152701))
-        error("Beta must be positive (its denominator must be negative), hence reduce dt!")
+    %beta = -4x^2 / ( 4x + y^2/(alpha^2/beta)). beta must be positive, hence its denominator cannot be >=0
+    if (y_val ~=0 && dt >= (-4 * x_val * 1.2434134152701)/(y_val^2))
+        disp("Beta must be positive (its denominator must be negative), hence dt will be reduced!")
+        dt = dt/1.5;
+        while (y_val ~=0 && dt >= (-4 * x_val * 1.243)/(y_val^2))
+            dt = dt/1.5;
+        end
+        x_s = dt * x_val;
+        y_s = dt * y_val;
     end
-    s = 2;%given that pa
+    s = 2;
     betaS = (s+4)*(s-1)/3;
     alphaS = sqrt(1.5 * betaS); %if s==2, p = 1.5
     ellispe_cond = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s / alphaS)^2.0;
@@ -282,6 +287,7 @@ else
         ellispe_cond = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s/ alphaS) ^ 2.0;
     end
 end
+step_size = dt;
 s_final = s;
 disp("Total number of stages: " + s_final);
 RKG2_stabReg(s_final, alphaS);
@@ -289,7 +295,12 @@ hold on;
 plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5)
 hold on
 dim = [0.145, 0.825, 0.3, 0.1];
-str = {[ 'dt = ', num2str(dt) ]; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s_final) ]};
+if (dt~=original_dt)
+    dt_label = [ 'dt (modified) = ', num2str(dt) ];
+else
+    dt_label = [ 'dt (original) = ', num2str(dt) ];
+end
+str = {dt_label; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s_final) ]};
 annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 10);
 hold off;
 end
@@ -314,7 +325,8 @@ end
 zmax = -2 * (s + 4) * (s - 1) / 6;
 xmin = zmax * 1.1;               
 xmax = max(5, abs(zmax) * 0.05); 
-ymax = abs(zmax) * 0.5;          
+ymax = abs(zmax) * 1.0; %increase the value after abs(zmax) of you do not
+% want any part of the stability region to be cut off
 ymin = -ymax;
 
 % compute the paramters in the stabilty region formula
@@ -365,7 +377,9 @@ y_t = alpha_s * sin(t) + 0;
 plot(x_t, y_t, 'r--', "LineWidth", 1)
 
 %add the region where the scheme will not work (where the denominator of
-%beta is not negative)
+%beta is not negative). This region is independent of the number of stages
+%and only dependent on p=1.243 because this is the value large stage values
+%converge to.
 p_max = 1.243; %the maximum value of p = alpha^2/beta, large stages converge to thsi value
 yy = linspace(ymin, ymax, 400);
 xx = -(yy.^2) / (4.0 * p_max);

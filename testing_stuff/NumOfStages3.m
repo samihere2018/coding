@@ -18,7 +18,7 @@ if (x_val>=0)
 else
     %beta = -4x^2 / ( 4x + y^2/(alpha^2/beta) )
     %given that beta must be positive, the denominator cannot be >=0
-    if (abs(x_s) <= abs(y_s)^2.0 / (4.0 * 1.2434134152701))
+    if (y_val ~=0 && abs(x_s) <= abs(y_s)^2.0 / (4.0 * 1.2434134152701))
         error("Beta must be positive (its denominator must be negative), hence reduce dt!")
     end
     %from the above, rather than returning an error, why not keep reducing
