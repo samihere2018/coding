@@ -16,7 +16,7 @@ if (x_val>=0)
     alphaS = sqrt(1.5 * betaS); %if s==2, p = 1.5
 else
     %beta = -4x^2 / ( 4x + y^2/(alpha^2/beta)). beta must be positive, hence its denominator cannot be >=0
-    if (y_val ~=0 && dt >= (-4 * x_val * 1.2434134152701)/(y_val^2))
+    if (y_val ~=0 && dt >= (-4 * x_val * 1.243)/(y_val^2))
         disp("Beta must be positive (its denominator must be negative), hence dt will be reduced!")
         dt = dt/1.5;
         while (y_val ~=0 && dt >= (-4 * x_val * 1.243)/(y_val^2))
