@@ -14,11 +14,13 @@ if (x_val>=0)
     s=2;%Prof Reynolds: we have to consider a better option for when real(lambda)>=0)
     betaS = (s+4)*(s-1)/3;
     alphaS = sqrt(1.5 * betaS); %if s==2, p = 1.5
+    ellipse_num = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s / alphaS)^2.0;
 
     % update RKG2 parameters with final s to compute absolute value of the stability polynomial 
     w_1 = 6 / ( (s+4) * (s-1) );
     b_s = ( 4 * (s-1)* (s+4) ) / ( 3 * s * (s+1) * (s+2) * (s+3) );
     a_s = 1 - ( (s+1) * (s+2) / 2) * b_s;
+ 
 else
     %beta = -4x^2 / ( 4x + y^2/(alpha^2/beta)). beta must be positive, hence its denominator cannot be >=0
     if (y_val ~=0 && dt >= (-4 * x_val * 1.243)/(y_val^2))
@@ -294,7 +296,9 @@ else
     w_1 = 6 / ( (s+4) * (s-1) );
     b_s = ( 4 * (s-1)* (s+4) ) / ( 3 * s * (s+1) * (s+2) * (s+3) );
     a_s = 1 - ( (s+1) * (s+2) / 2) * b_s;
+    ellipse_num = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s / alphaS)^2.0;
 end
+
 % step_size = dt;
 s_final = s;
 
@@ -314,7 +318,7 @@ end
 absRs = abs(a_s + b_s * Cc);
 % ------------------------------------------------------------------------------------
 
-disp("stages = " + s_final + ", final step size = " + dt + ", |R_s(dt*lambda)| = " + absRs);
+disp("stages = " + s_final + ", final step size = " + dt + ", |R_s(dt*lambda)| = " + absRs + ", ellipse-value = " + ellipse_num);
 RKG2_stabReg(s_final, alphaS);
 hold on;
 plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5)
@@ -325,7 +329,7 @@ if (dt~=original_dt)
 else
     dt_label = [ 'dt (original) = ', num2str(dt) ];
 end
-str = {dt_label; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s_final) ]; ['|R_s(dt*lambda)| = ', num2str(absRs) ]};
+str = {dt_label; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s_final) ]; ['|R_s(dt*lambda)| = ', num2str(absRs) ]; ['ellipse-value = ', num2str(ellipse_num) ]};
 annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 10);
 hold off;
 end
@@ -418,3 +422,72 @@ hold off;
 
 end
 
+
+%%%%% to check if another number of stages would have worked for a certain dt and lambda use the code below
+
+% lambda = -100 + 2i;
+% dt = 0.5;
+% 
+% s = 10; p_value =  1.07555148548799;
+% betaS = (s+4)*(s-1)/3; alphaS = sqrt(p_value * betaS);
+% w_1 = 6 / ( (s+4) * (s-1) );
+% b_s = ( 4 * (s-1)* (s+4) ) / ( 3 * s * (s+1) * (s+2) * (s+3) );
+% a_s = 1 - ( (s+1) * (s+2) / 2) * b_s;
+% z_pt = x_s + 1i * y_s;
+% w_pt = 1 + w_1 * z_pt;
+% C32_p2 = 1;
+% C32_p1 = 2 * (3/2) * w_pt;
+% for k = 2:s
+% Cc = (1/k) * (w_pt * (2*k + 1) * C32_p1 - (k + 1) * C32_p2);
+% C32_p2 = C32_p1;
+% C32_p1 = Cc;
+% end
+% absRs = abs(a_s + b_s * Cc);
+% RKG2_stabReg(s, alphaS);
+% hold on;
+% plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5);
+% title(sprintf('s=%d: |R_s|=%.6f: ellipse-cond = %.6f', s, absRs, (x_s/(betaS/2)+1)^2+(y_s/alphaS)^2));
+% 
+% %s=11 stages
+% s = 11; p_value =  0.926497818908938;
+% betaS = (s+4)*(s-1)/3; alphaS = sqrt(p_value * betaS);
+% w_1 = 6 / ( (s+4) * (s-1) );
+% b_s = ( 4 * (s-1)* (s+4) ) / ( 3 * s * (s+1) * (s+2) * (s+3) );
+% a_s = 1 - ( (s+1) * (s+2) / 2) * b_s;
+% z_pt = x_s + 1i * y_s;
+% w_pt = 1 + w_1 * z_pt;
+% C32_p2 = 1;
+% C32_p1 = 2 * (3/2) * w_pt;
+% for k = 2:s
+% Cc = (1/k) * (w_pt * (2*k + 1) * C32_p1 - (k + 1) * C32_p2);
+% C32_p2 = C32_p1;
+% C32_p1 = Cc;
+% end
+% absRs = abs(a_s + b_s * Cc);
+% RKG2_stabReg(s, alphaS);
+% hold on;
+% plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5);
+% title(sprintf('s=%d: |R_s|=%.6f: ellipse-cond = %.6f', s, absRs, (x_s/(betaS/2)+1)^2+(y_s/alphaS)^2));
+% 
+% %s=12 stages
+% s = 12; p_value =  1.11903250586559;
+% betaS = (s+4)*(s-1)/3; alphaS = sqrt(p_value * betaS);
+% w_1 = 6 / ( (s+4) * (s-1) );
+% b_s = ( 4 * (s-1)* (s+4) ) / ( 3 * s * (s+1) * (s+2) * (s+3) );
+% a_s = 1 - ( (s+1) * (s+2) / 2) * b_s;
+% z_pt = x_s + 1i * y_s;
+% w_pt = 1 + w_1 * z_pt;
+% C32_p2 = 1;
+% C32_p1 = 2 * (3/2) * w_pt;
+% for k = 2:s
+% Cc = (1/k) * (w_pt * (2*k + 1) * C32_p1 - (k + 1) * C32_p2);
+% C32_p2 = C32_p1;
+% C32_p1 = Cc;
+% end
+% absRs = abs(a_s + b_s * Cc);
+% RKG2_stabReg(s, alphaS);
+% hold on;
+% plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5);
+% title(sprintf('s=%d: |R_s|=%.6f: ellipse-cond = %.6f', s, absRs, (x_s/(betaS/2)+1)^2+(y_s/alphaS)^2));
+% 
+% 
