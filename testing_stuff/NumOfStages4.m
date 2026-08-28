@@ -14,14 +14,17 @@ if (x_val>=0)
     s=2;%Prof Reynolds: we have to consider a better option for when real(lambda)>=0)
     betaS = (s+4)*(s-1)/3;
     alphaS = sqrt(1.5 * betaS); %if s==2, p = 1.5
+
+    % update RKG2 parameters with final s to compute absolute value of the stability polynomial 
+    w_1 = 6 / ( (s+4) * (s-1) );
+    b_s = ( 4 * (s-1)* (s+4) ) / ( 3 * s * (s+1) * (s+2) * (s+3) );
+    a_s = 1 - ( (s+1) * (s+2) / 2) * b_s;
 else
     %beta = -4x^2 / ( 4x + y^2/(alpha^2/beta)). beta must be positive, hence its denominator cannot be >=0
     if (y_val ~=0 && dt >= (-4 * x_val * 1.243)/(y_val^2))
         disp("Beta must be positive (its denominator must be negative), hence dt will be reduced!")
-        dt = dt/1.5;
-        while (y_val ~=0 && dt >= (-4 * x_val * 1.243)/(y_val^2))
-            dt = dt/1.5;
-        end
+        dt_limit = (-4 * x_val * 1.243)/(y_val^2); %dt cannot be more than or equal to this value
+        dt = 0.9 * dt_limit; %using a safety factor of 10 to reduce dt
         x_s = dt * x_val;
         y_s = dt * y_val;
     end
@@ -287,10 +290,31 @@ else
         alphaS = sqrt(p * betaS); 
         ellispe_cond = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s/ alphaS) ^ 2.0;
     end
+    % update RKG2 parameters with final s to compute absolute value of the stability polynomial 
+    w_1 = 6 / ( (s+4) * (s-1) );
+    b_s = ( 4 * (s-1)* (s+4) ) / ( 3 * s * (s+1) * (s+2) * (s+3) );
+    a_s = 1 - ( (s+1) * (s+2) / 2) * b_s;
 end
 % step_size = dt;
 s_final = s;
-disp("stages = " + s_final + ", final step size = " + dt);
+
+% ------------------------------------------------------------------------------------
+% Use lambda, final s and dt to compute the absolute value of the stability polynomial
+z_pt = x_s + 1i * y_s;
+w_pt = 1 + w_1 * z_pt;
+
+C32_p2 = 1;
+C32_p1 = 2 * (3/2) * w_pt;
+
+for k = 2:s_final
+Cc = (1/k) * (w_pt * (2*k + 1) * C32_p1 - (k + 1) * C32_p2);
+C32_p2 = C32_p1;
+C32_p1 = Cc;
+end
+absRs = abs(a_s + b_s * Cc);
+% ------------------------------------------------------------------------------------
+
+disp("stages = " + s_final + ", final step size = " + dt + ", |R_s(dt*lambda)| = " + absRs);
 RKG2_stabReg(s_final, alphaS);
 hold on;
 plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5)
@@ -301,7 +325,7 @@ if (dt~=original_dt)
 else
     dt_label = [ 'dt (original) = ', num2str(dt) ];
 end
-str = {dt_label; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s_final) ]};
+str = {dt_label; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s_final) ]; ['|R_s(dt*lambda)| = ', num2str(absRs) ]};
 annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 10);
 hold off;
 end
