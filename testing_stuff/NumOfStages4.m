@@ -322,7 +322,7 @@ disp("stages = " + s_final + ", final step size = " + dt + ", |R_s(dt*lambda)| =
 RKG2_stabReg(s_final, alphaS);
 hold on;
 plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5)
-hold on
+hold on;
 dim = [0.145, 0.825, 0.3, 0.1];
 if (dt~=original_dt)
     dt_label = [ 'dt (original) = ', num2str(original_dt), ',  dt (modified) = ', num2str(dt) ];
@@ -423,7 +423,7 @@ hold off;
 end
 
 
-%%%%% to check if another number of stages would have worked for a certain dt and lambda use the code below
+%%%% to check if another number of stages would have worked for a certain dt and lambda use the code below
 
 % lambda = -100 + 2i;
 % dt = 0.5;
@@ -443,9 +443,15 @@ end
 % C32_p1 = Cc;
 % end
 % absRs = abs(a_s + b_s * Cc);
+% ellipse_num = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s / alphaS)^2.0;
 % RKG2_stabReg(s, alphaS);
 % hold on;
 % plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5);
+% hold on;
+% dim = [0.145, 0.825, 0.3, 0.1];
+% str = {[ 'dt = ', num2str(dt) ]; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s) ]; ['|R_s(dt*lambda)| = ', num2str(absRs) ]; ['ellipse-value = ', num2str(ellipse_num) ]};
+% annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 10);
+% hold off;
 % title(sprintf('s=%d: |R_s|=%.6f: ellipse-cond = %.6f', s, absRs, (x_s/(betaS/2)+1)^2+(y_s/alphaS)^2));
 % 
 % %s=11 stages
@@ -464,9 +470,15 @@ end
 % C32_p1 = Cc;
 % end
 % absRs = abs(a_s + b_s * Cc);
+% ellipse_num = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s / alphaS)^2.0;
 % RKG2_stabReg(s, alphaS);
 % hold on;
 % plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5);
+% hold on;
+% dim = [0.145, 0.825, 0.3, 0.1];
+% str = {[ 'dt = ', num2str(dt) ]; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s) ]; ['|R_s(dt*lambda)| = ', num2str(absRs) ]; ['ellipse-value = ', num2str(ellipse_num) ]};
+% annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 10);
+% hold off;
 % title(sprintf('s=%d: |R_s|=%.6f: ellipse-cond = %.6f', s, absRs, (x_s/(betaS/2)+1)^2+(y_s/alphaS)^2));
 % 
 % %s=12 stages
@@ -485,9 +497,15 @@ end
 % C32_p1 = Cc;
 % end
 % absRs = abs(a_s + b_s * Cc);
+% ellipse_num = (x_s/(betaS/2.0) + 1.0)^2.0 + (y_s / alphaS)^2.0;
 % RKG2_stabReg(s, alphaS);
 % hold on;
 % plot(dt*real(lambda), dt*imag(lambda), 'k*', 'MarkerSize', 12, 'LineWidth', 1.5);
+% hold on;
+% dim = [0.145, 0.825, 0.3, 0.1];
+% str = {[ 'dt = ', num2str(dt) ]; [ 'lambda = ', num2str(lambda) ]; ['number of stages = ', num2str(s) ]; ['|R_s(dt*lambda)| = ', num2str(absRs) ]; ['ellipse-value = ', num2str(ellipse_num) ]};
+% annotation('textbox', dim, 'String', str, 'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 10);
+% hold off;
 % title(sprintf('s=%d: |R_s|=%.6f: ellipse-cond = %.6f', s, absRs, (x_s/(betaS/2)+1)^2+(y_s/alphaS)^2));
 % 
 % 
