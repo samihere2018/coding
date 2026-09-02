@@ -416,8 +416,8 @@ fill([xx, xmax*ones(1, 400)], [yy, fliplr(yy)], [0.6 0.6 0.6], 'FaceAlpha', 0.3,
 plot(xx, yy, 'k:', 'LineWidth', 1.2);
 
 title(sprintf('RKG2 stability region with %d stages', s), 'FontSize', 12);
-xlabel('real(z)', 'FontSize', 12);
-ylabel('imag(z)', 'FontSize', 12);
+xlabel('Re(z)', 'FontSize', 12);
+ylabel('Im(z)', 'FontSize', 12);
 hold off;
 
 end
